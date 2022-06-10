@@ -1,4 +1,17 @@
-import createStore from './createStore';
-import todoReducer, { initialState as todoInitialState } from './todos';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import logger from "redux-logger";
 
-export default createStore(todoReducer, todoInitialState);
+import todosReducer from "./reducers/todos";
+import filterReducer from "./reducers/filter";
+
+const reducers = combineReducers({
+  todos: todosReducer,
+  filter: filterReducer
+});
+
+const store = createStore(
+  reducers,
+  applyMiddleware(logger)
+);
+
+export default store;

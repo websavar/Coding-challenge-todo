@@ -1,5 +1,3 @@
-import { Filters } from "../constants";
-
 const uniqueId = {
   currentId: 0,
   get() {
@@ -30,8 +28,7 @@ export const initialState = {
       title: 'JS-202',
       completed: false
     }
-  ],
-  filter: Filters.ALL
+  ]
 };
 
 export default (state = initialState, action) => {
@@ -51,8 +48,6 @@ export default (state = initialState, action) => {
         }
       }
       break;
-    case 'FILTER':
-      state.filter = action.filterId;
-      break;
   }
+  return state
 }

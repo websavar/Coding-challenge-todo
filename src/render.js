@@ -1,4 +1,5 @@
-import { Filters } from "./constants";
+import store from './store';
+import { getTodosByFilter } from './store/selector';
 
 function renderApp(input, todoList) {
   return `<div>${input}${todoList}</div>`;
@@ -37,19 +38,8 @@ function renderTodoItem(todo) {
   </li>`;
 }
 
-export default (element, state) => {
-  const { todos, filter } = state;
-
-  const getTodosByFilter = (todos, filter) => {
-    switch (filter) {
-      case Filters.COMPLETED:
-        return todos.filter(todo => todo.completed);
-      case Filters.INCOMPLETED:
-        return todos.filter(todo => !todo.completed);
-      default:
-        return todos;
-    }
-  }
+export default (element) => {
+  const { todos, filter } = store.getState();
 
   const filterTodos = getTodosByFilter(todos, filter);
 
