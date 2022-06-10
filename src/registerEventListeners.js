@@ -24,3 +24,8 @@ addListener('click', '[data-element="toggleTodo"]', e => {
   const id = Number(e.target.dataset.id);
   store.dispatch(todoActions.toggle(id));
 });
+
+addListener('click', 'input[name="filterTodo"]', e => {
+  const filterId = e.target.id;
+  store.dispatch(todoActions.filter(filterId));
+});

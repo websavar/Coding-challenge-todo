@@ -21,3 +21,7 @@ body {
 .todos__item_checked {
   background-color: #9ea;
 }
+
+.filterItems {
+  margin-top: 10px;
+}

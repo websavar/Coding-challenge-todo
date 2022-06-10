@@ -1,11 +1,28 @@
+import { Filters } from "./constants";
+
 function renderApp(input, todoList) {
   return `<div>${input}${todoList}</div>`;
 }
 
-function renderForm() {
+function renderForm(activeFilter) {
   return `<div class="form">
     <input type="text" data-element="addTodoInput">
     <button data-element="addTodoButton">Add</button>
+
+    <div class="filterItems">
+      <label>
+        <input type="radio" name="filterTodo" id="all" ${activeFilter === 'all' && 'checked'}>
+        <span>Show all</span>
+      </label>
+      <label>
+        <input type="radio" name="filterTodo" id="completed" ${activeFilter === 'completed' && 'checked'}>
+        <span>Show open</span>
+      </label>
+      <label>
+        <input type="radio" name="filterTodo" id="incompleted" ${activeFilter === 'incompleted' && 'checked'}>
+        <span>Show closed</span>
+      </label>
+    </div>
   </div>`;
 }
 
@@ -21,9 +38,25 @@ function renderTodoItem(todo) {
 }
 
 export default (element, state) => {
-  const todoItems = state.todos.map(renderTodoItem).join('');
+  const { todos, filter } = state;
+
+  const getTodosByFilter = (todos, filter) => {
+    switch (filter) {
+      case Filters.COMPLETED:
+        return todos.filter(todo => todo.completed);
+      case Filters.INCOMPLETED:
+        return todos.filter(todo => !todo.completed);
+      default:
+        return todos;
+    }
+  }
+
+  const filterTodos = getTodosByFilter(todos, filter);
+
+  const todoItems = filterTodos.map(renderTodoItem).join('');
+
   element.innerHTML = renderApp(
-    renderForm(),
+    renderForm(filter),
     renderTodos(todoItems)
   );
 }
