@@ -14,6 +14,12 @@ addListener('click', '[data-element="addTodoButton"]', () => {
   store.dispatch(todoActions.add(todoInput.value));
 });
 
+addListener('keydown', '[data-element="addTodoInput"]', e => {
+  const todoInput = document.querySelector('[data-element="addTodoInput"]');
+  if (e.code === 'Enter' || e.code === 'NumpadEnter')
+    store.dispatch(todoActions.add(todoInput.value));
+});
+
 addListener('click', '[data-element="toggleTodo"]', e => {
   const id = Number(e.target.dataset.id);
   store.dispatch(todoActions.toggle(id));
