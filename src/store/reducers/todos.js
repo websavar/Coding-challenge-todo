@@ -34,11 +34,14 @@ export const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD':
-      state.todos.push({
-        id: uniqueId.get(),
-        title: action.title,
-        completed: false
-      });
+      state = {
+        ...state,
+        todos: [...state.todos, {
+          id: uniqueId.get(),
+          title: action.title,
+          completed: false
+        }]
+      };
       break;
     case 'TOGGLE':
       for (let todo of state.todos) {
